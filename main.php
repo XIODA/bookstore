@@ -76,6 +76,23 @@ if (isset($_POST["deleteAll"])) {
 }
 ?>
 
+<!-- 刪除單張圖片 -->
+<?php
+include("configure.php");
+$link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=utf8', $username, $password);
+
+
+if (isset($_POST["deleteOne"])) {
+  if (isset($_POST["DeleteP"])) {
+    $DeleteP = $_POST["DeleteP"];
+
+    $pic_db_one = "DELETE FROM `bookstore`.`images` WHERE `PicNum` = $DeleteP";
+    $sth = $link->prepare($pic_db_one);
+    $sth->execute();
+  }
+}
+
+?>
 
 
 <!-- 頁數分頁  -->
@@ -203,7 +220,7 @@ if (isset($_GET['page'])) {
         if ($pic % 3 == 0) {
           echo  '<div class="w3-third">';
         }
-        echo '<img src="' . $row["Image"] . '" style="width:100%" onclick="onClick(this)" pid = " '. $row["PicNum"] .'" alt="' . $Imagea[1] . '">';
+        echo '<img src="' . $row["Image"] . '" style="width:100%" onclick="onClick(this)" pid = " ' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
         if ($pic % 3 == 0) {
           echo '</div>';
         }
@@ -236,7 +253,7 @@ if (isset($_GET['page'])) {
         <p id="caption"></p>
         <form action="" method="post">
           <input type="text" name="DeleteP" hidden>
-          <input type="submit" value="刪除單張圖片" name="deleteOne">
+          <input type="submit" value="刪除" name="deleteOne">
         </form>
       </div>
     </div>
@@ -367,7 +384,7 @@ if (isset($_GET['page'])) {
       var captionText = document.getElementById("caption");
       captionText.innerHTML = element.alt;
       console.log(element);
-      var inputDel= document.getElementsByName("DeleteP");
+      var inputDel = document.getElementsByName("DeleteP");
       inputDel[0].value = element.getAttribute('pid');
     }
   </script>
