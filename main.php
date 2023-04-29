@@ -12,10 +12,6 @@ if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
 
 <!-- 新增圖片 -->
 <?php
-// 建立與MySQL資料庫的連線
-include("configure.php");  //抓取conifgure.php的資料庫
-$link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=utf8', $username, $password); //用$link連接 連接資料庫
-
 if (isset($_POST['upload'])) {  //如果抓取到upload
   $input_image = $_FILES['image']['name'];  //  設一個變數抓取檔案圖片及名字
   $image_info = @getimagesize($input_image);  //拿到圖片的資訊
@@ -63,8 +59,6 @@ if (isset($_POST['upload'])) {  //如果抓取到upload
 <!-- 刪除全部圖片 -->
 <?php
 // 建立與MySQL資料庫的連線
-include("configure.php");
-$link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=utf8', $username, $password);
 
 if (isset($_POST["deleteAll"])) {
   //$deleteAll= $_POST["deleteAll"];
@@ -78,10 +72,6 @@ if (isset($_POST["deleteAll"])) {
 
 <!-- 刪除單張圖片 -->
 <?php
-include("configure.php");
-$link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=utf8', $username, $password);
-
-
 if (isset($_POST["deleteOne"])) {
   if (isset($_POST["DeleteP"])) {
     $DeleteP = $_POST["DeleteP"];
