@@ -200,8 +200,6 @@ if (isset($_GET['page'])) {
 
       // 取得多筆資料
       $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
-      // print_r($reasult);
-      // exit;
       $pic = 0;
       foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
       {
@@ -258,7 +256,6 @@ if (isset($_GET['page'])) {
           <?php
           // $query = "select * from bookstore_manber where `id` = ;
           // $result = $link->query($query);
-
           $query = 'SELECT * FROM bookstore_manber WHERE `ID` = :sn';
           $stmt = $link->prepare($query);
           $stmt->bindValue(':sn', $ID);
@@ -271,12 +268,16 @@ if (isset($_GET['page'])) {
           foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
           {
             echo $row["NAME"];
+            echo "<p>";
+            echo  $row["CONTENT"];
+            echo "</p>";
           }
 
-          echo "<p>";
-          echo $row["CONTENT"];
-          echo "</p>";
           ?>
+          <form action="update.php" method="POST">
+            <input type="submit" value="編輯" name="edit">
+            
+          </form>
         </h4>
         <!-- 放置數據的資料 用資料量進行百分比配置 -->
         <hr class="w3-opacity">
