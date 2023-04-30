@@ -16,9 +16,9 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
 <body>
     <form action="#" method="post">
         <div>請輸入帳號:</div>
-        <input type="text" name="account" placeholder="請輸入帳號">
+        <input type="text" name="account" placeholder="請輸入帳號" minlength="8">
         <div>請輸入密碼:</div>
-        <input type="password" name="password">
+        <input type="password" name="password" minlength="8">
         <div>請輸入姓名:</div>
         <input type="text" name="name">
 
