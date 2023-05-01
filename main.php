@@ -10,6 +10,8 @@ if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
 }
 ?>
 
+<!--  -->
+
 <!-- 新增圖片 -->
 <?php
 if (isset($_POST['upload'])) {  //如果抓取到upload
@@ -128,6 +130,8 @@ if (isset($_GET['page'])) {
       opacity: 1
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="message.css">
+  <script src="./js/lib/jquery.js"></script>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -234,15 +238,30 @@ if (isset($_GET['page'])) {
     </div>
 
     <!-- Modal for full size images on click-->
-    <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
-      <span class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+    <div id="modal01" class="w3-modal w3-black" style="padding-top:0" >
+    <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
+      <span id="closePic" class="w3-button w3-black w3-xlarge w3-display-topright" onClick='closePicture()'>×</span>
       <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
         <img id="img01" class="w3-image">
         <p id="caption"></p>
+
         <form action="" method="post">
           <input type="text" name="DeleteP" hidden>
           <input type="submit" value="刪除" name="deleteOne">
         </form>
+        <br />
+        <form action="" method="post">
+          <textarea id="messageT" name="messageT" placeholder="留言..."></textarea>
+          <input type="text" name="messageH" hidden>
+          <input type="submit" value="留言" name="message">
+
+          <div class="messageT" id="messageTe">
+          <?php
+          require('./message.php');
+          ?>
+          </div>
+        </form>
+
       </div>
     </div>
 
@@ -275,8 +294,10 @@ if (isset($_GET['page'])) {
 
           ?>
           <form action="update.php" method="POST">
+
             <input type="submit" value="編輯" name="edit">
-            
+
+
           </form>
         </h4>
         <!-- 放置數據的資料 用資料量進行百分比配置 -->
@@ -377,6 +398,40 @@ if (isset($_GET['page'])) {
       console.log(element);
       var inputDel = document.getElementsByName("DeleteP");
       inputDel[0].value = element.getAttribute('pid');
+      var inputH = document.getElementsByName('messageH');
+      inputH[0].value = element.getAttribute('pid');
+
+      // 修改留言區內容
+      var datas = {
+        // "userid": ID
+        "PicNum": inputDel[0].value,
+      };
+      $.ajax({
+        type: "POST",
+        url: "./backend/APIs/message/messageShow.php",
+        dataType: "json", //用字串顯示
+        data: datas,
+        success: function(response) {
+          // console.log(response);
+          var messageTe = document.getElementById('messageTe');
+          console.log(messageTe);
+          messageTe.innerHTML 
+
+          var bb ="";
+          for (var i = 0; i < response.length; i++) {
+             bb = bb+(response[i].CONTENT);
+            }
+            messageTe.innerHTML = bb;
+        },
+        error: function(thrownError) {
+          console.log(thrownError);
+        }
+      });
+    }
+
+    function closePicture() {
+      var closePictureArea = document.getElementById("modal01");
+      closePictureArea.style.display = 'none';
     }
   </script>
 
