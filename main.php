@@ -238,30 +238,44 @@ if (isset($_GET['page'])) {
     </div>
 
     <!-- Modal for full size images on click-->
-    <div id="modal01" class="w3-modal w3-black" style="padding-top:0" >
-    <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
+    <div id="modal01" class="w3-modal w3-black" style="padding-top:0">
+      <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
       <span id="closePic" class="w3-button w3-black w3-xlarge w3-display-topright" onClick='closePicture()'>×</span>
       <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
         <img id="img01" class="w3-image">
         <p id="caption"></p>
 
+
         <form action="" method="post">
           <input type="text" name="DeleteP" hidden>
-          <input type="submit" value="刪除" name="deleteOne">
+          <input type="submit" value="刪除圖片" name="deleteOne">
         </form>
         <br />
+
         <form action="" method="post">
           <textarea id="messageT" name="messageT" placeholder="留言..."></textarea>
           <input type="text" name="messageH" hidden>
           <input type="submit" value="留言" name="message">
 
           <div class="messageT" id="messageTe">
-          <?php
-          require('./message.php');
-          ?>
+            <?php
+            require('./message.php');
+            ?>
+            <span>123</span>
           </div>
-        </form>
 
+        </form>
+        <form action="" method="post">
+          <input type="text" name="delmessH" hidden>
+          <input type="submit" value="刪除全部留言" name="delmess">
+          <div>
+            <?php
+            require('./delmessage.php');
+            ?>
+          </div>
+          
+
+        </form>
       </div>
     </div>
 
@@ -400,6 +414,9 @@ if (isset($_GET['page'])) {
       inputDel[0].value = element.getAttribute('pid');
       var inputH = document.getElementsByName('messageH');
       inputH[0].value = element.getAttribute('pid');
+      var inputH = document.getElementsByName('delmessH');
+      inputH[0].value = element.getAttribute('pid');
+
 
       // 修改留言區內容
       var datas = {
@@ -413,15 +430,17 @@ if (isset($_GET['page'])) {
         data: datas,
         success: function(response) {
           // console.log(response);
-          var messageTe = document.getElementById('messageTe');
-          console.log(messageTe);
-          messageTe.innerHTML 
+          // var messageTe = document.getElementById('messageTe');
+          // console.log(messageTe);
+          // messageTe.innerHTML
+          var bb = "";
 
-          var bb ="";
+
           for (var i = 0; i < response.length; i++) {
-             bb = bb+(response[i].CONTENT);
-            }
-            messageTe.innerHTML = bb;
+
+            bb = bb + (response[i].CONTENT) + "///date:" + (response[i].DATE) + " " + "-刪除" + "<br/>";
+          }
+          messageTe.innerHTML = bb
         },
         error: function(thrownError) {
           console.log(thrownError);
