@@ -11,8 +11,9 @@ if (isset($_POST["delmess"])) {
         $delmess = $_POST["delmess"];
         $delmessH = $_POST["delmessH"];
         
-        $sql = "DELETE FROM `bookstore`.`message` Where  `PicNum` = $delmessH";
+        $sql = "DELETE FROM `bookstore`.`message` Where  `PicNum` = :sP";
         $stmt = $link->prepare($sql);
+        $stmt->bindValue(':sP',$delmessH);
         $stmt->execute();
     }
 }

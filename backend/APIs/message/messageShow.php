@@ -7,7 +7,7 @@ if (isset($_POST["PicNum"])) {
 
 
 
-    $query = 'SELECT `PicNum`,`CONTENT`,`DATE` FROM bookstore.message where `PicNum` = :sh';
+    $query = 'SELECT `ID`,`PicNum`,`CONTENT`,`DATE` FROM bookstore.message where `PicNum` = :sh';
     $stmt = $link->prepare($query);
     // $stmt->bindValue(':st', $messageT);
     $stmt->bindValue(':sh', $PicNum);

@@ -78,8 +78,9 @@ if (isset($_POST["deleteOne"])) {
   if (isset($_POST["DeleteP"])) {
     $DeleteP = $_POST["DeleteP"];
 
-    $pic_db_one = "DELETE FROM `bookstore`.`images` WHERE `PicNum` = $DeleteP";
+    $pic_db_one = "DELETE FROM `bookstore`.`images` WHERE `PicNum` = :sp ";
     $sth = $link->prepare($pic_db_one);
+    $sth->bindValue(':sp', $DeleteP);
     $sth->execute();
   }
 }
@@ -256,15 +257,19 @@ if (isset($_GET['page'])) {
           <textarea id="messageT" name="messageT" placeholder="留言..."></textarea>
           <input type="text" name="messageH" hidden>
           <input type="submit" value="留言" name="message">
-
-          <div class="messageT" id="messageTe">
+          <div id="messageTe">
             <?php
             require('./message.php');
             ?>
-            <span>123</span>
           </div>
+        </form>
+
+        <form action="" method="post">
+          <input type="text" name="delOneMsg" mid="" hidden>
 
         </form>
+
+
         <form action="" method="post">
           <input type="text" name="delmessH" hidden>
           <input type="submit" value="刪除全部留言" name="delmess">
@@ -273,7 +278,7 @@ if (isset($_GET['page'])) {
             require('./delmessage.php');
             ?>
           </div>
-          
+
 
         </form>
       </div>
@@ -293,6 +298,7 @@ if (isset($_GET['page'])) {
           $stmt = $link->prepare($query);
           $stmt->bindValue(':sn', $ID);
           $stmt->execute();
+
 
           // 取得多筆資料
           $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -409,7 +415,7 @@ if (isset($_GET['page'])) {
       document.getElementById("modal01").style.display = "block";
       var captionText = document.getElementById("caption");
       captionText.innerHTML = element.alt;
-      console.log(element);
+      // console.log(element);
       var inputDel = document.getElementsByName("DeleteP");
       inputDel[0].value = element.getAttribute('pid');
       var inputH = document.getElementsByName('messageH');
@@ -431,14 +437,13 @@ if (isset($_GET['page'])) {
         success: function(response) {
           // console.log(response);
           // var messageTe = document.getElementById('messageTe');
-          // console.log(messageTe);
           // messageTe.innerHTML
           var bb = "";
 
 
           for (var i = 0; i < response.length; i++) {
 
-            bb = bb + (response[i].CONTENT) + "///date:" + (response[i].DATE) + " " + "-刪除" + "<br/>";
+            bb = bb + (response[i].CONTENT) + "///date:" + (response[i].DATE) + " " + "<button type='button' mid='" + (response[i].ID) + "' onclick = 'delOneMsg(this)'>" + "-刪除" + "</button>" + "<br/>";
           }
           messageTe.innerHTML = bb
         },
@@ -451,6 +456,31 @@ if (isset($_GET['page'])) {
     function closePicture() {
       var closePictureArea = document.getElementById("modal01");
       closePictureArea.style.display = 'none';
+    }
+
+    //刪除單個留言
+
+
+
+    function delOneMsg(emt) {
+      // var inputMsgD = document.getElementsByName('delOneMsg');
+      // inputMsgD[0].value =getAttribute('mid');
+      
+      // console.log(emt.getAttribute('mid'));
+      var delOMsg = {
+        "delOneMsg": emt.getAttribute('mid')
+      }
+      $.ajax({
+        type: 'POST',
+        url: './backend/APIs/message/delOneMsg.php',
+        data: delOMsg,
+        dataType: 'JSON',
+        success: function(response) {
+          var closePicMsg = document.getElementById("modal01");
+          closePicMsg.style.display = 'none';
+          
+        }
+      })
     }
   </script>
 
