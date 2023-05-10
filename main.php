@@ -127,12 +127,20 @@ if (isset($_GET['page'])) {
       cursor: pointer
     }
 
-    .w3-third img:hover {
-      opacity: 1
+    .w3-modal-content{
+      display: flex;
     }
+
+    .message{
+      text-align: right;
+      padding-left: 20%;
+    }
+
   </style>
   <link rel="stylesheet" type="text/css" href="message.css">
+  <link rel="stylesheet" type="text/css" href="./css/menu.css">
   <script src="./js/lib/jquery.js"></script>
+  <script src="./js/menu/dropdown.js"></script>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -141,9 +149,21 @@ if (isset($_GET['page'])) {
   <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
     <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
+
+    <select id="dropdown" onchange="select(this)">
+      <div text=""></div>
+
+      <option name="">請選擇分類</option>
+    </select>
+
+
+
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
     <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">關於我</a>
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">搜尋</a>
+
+    <!-- <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">分類</a> -->
+
+
     <a href="./logout.php" onclick="w3_close()" class="w3-bar-item w3-button">登出</a>
 
     <div class="w3-container w3-padding-32 w3-padding-large" id="contact">
@@ -191,13 +211,14 @@ if (isset($_GET['page'])) {
       </div>
     </div> -->
     <!-- Photo grid -->
-    <div class="w3-row">
+    <div class="w3-row" id="showPic" picid="">
 
       <?php
       // $query = "select * from bookstore_manber where `id` = ;
       // $result = $link->query($query);
 
       $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
+      // $query = 'SELECT * FROM images WHERE `UserID` = :sn AND Idmenu=3 limit :sp,6';
       $stmt = $link->prepare($query);
       $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
       $stmt->bindValue(':sn', $ID);
@@ -243,42 +264,39 @@ if (isset($_GET['page'])) {
       <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
       <span id="closePic" class="w3-button w3-black w3-xlarge w3-display-topright" onClick='closePicture()'>×</span>
       <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-        <img id="img01" class="w3-image">
-        <p id="caption"></p>
+        <div>
+          <img id="img01" class="w3-image">
+          <p id="caption"></p>
 
 
-        <form action="" method="post">
-          <input type="text" name="DeleteP" hidden>
-          <input type="submit" value="刪除圖片" name="deleteOne">
-        </form>
-        <br />
 
-        <form action="" method="post">
-          <textarea id="messageT" name="messageT" placeholder="留言..."></textarea>
-          <input type="text" name="messageH" hidden>
-          <input type="submit" value="留言" name="message">
-          <div id="messageTe">
-            <?php
-            require('./message.php');
-            ?>
-          </div>
-        </form>
-
-        <form action="" method="post">
-          <input type="text" name="delOneMsg" mid="" hidden>
-
-        </form>
-
-
-        <form action="" method="post">
-          <input type="text" name="delmessH" hidden>
-          <input type="submit" value="刪除全部留言" name="delmess">
-          <div>
-            <?php
-            require('./delmessage.php');
-            ?>
-          </div>
-
+          <form action="" method="post">
+            <input type="text" name="DeleteP" hidden>
+            <input type="text" name="editP" hidden>
+            <input type="submit" value="刪除圖片" name="deleteOne">
+            <input type="submit" value="編輯" name="editType">
+          </form>
+        </div>
+        <div class="message">
+          <form action="" method="post">
+            <textarea id="messageT" name="messageT" placeholder="留言..."></textarea>
+            <input type="text" name="messageH" hidden>
+            <input type="submit" value="留言" name="message">
+            <div id="messageTe">
+              <?php
+              require('./message.php');
+              ?>
+            </div>
+          </form>
+          <form action="" method="post">
+            <input type="text" name="delmessH" hidden>
+            <input type="submit" value="刪除全部留言" name="delmess">
+            <div>
+              <?php
+              require('./delmessage.php');
+              ?>
+            </div>
+        </div>
 
         </form>
       </div>
@@ -443,7 +461,7 @@ if (isset($_GET['page'])) {
 
           for (var i = 0; i < response.length; i++) {
 
-            bb = bb + (response[i].CONTENT) + "///date:" + (response[i].DATE) + " " + "<button type='button' mid='" + (response[i].ID) + "' onclick = 'delOneMsg(this)'>" + "-刪除" + "</button>" + "<br/>";
+            bb = bb + (response[i].CONTENT) + "///" + (response[i].DATE) + " " + "<button type='button' mid='" + (response[i].ID) + "' onclick = 'delOneMsg(this)'>" + "-刪除" + "</button>" + "<br/>";
           }
           messageTe.innerHTML = bb
         },
@@ -463,9 +481,11 @@ if (isset($_GET['page'])) {
 
 
     function delOneMsg(emt) {
+      var closePicMsg = document.getElementById("modal01");
+      closePicMsg.style.display = 'none';
       // var inputMsgD = document.getElementsByName('delOneMsg');
       // inputMsgD[0].value =getAttribute('mid');
-      
+
       // console.log(emt.getAttribute('mid'));
       var delOMsg = {
         "delOneMsg": emt.getAttribute('mid')
@@ -476,9 +496,7 @@ if (isset($_GET['page'])) {
         data: delOMsg,
         dataType: 'JSON',
         success: function(response) {
-          var closePicMsg = document.getElementById("modal01");
-          closePicMsg.style.display = 'none';
-          
+
         }
       })
     }
