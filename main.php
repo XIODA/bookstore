@@ -141,6 +141,7 @@ if (isset($_GET['page'])) {
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
   <script src="./js/lib/jquery.js"></script>
   <script src="./js/menu/dropdown.js"></script>
+  <script src="./js/addtype/addtype.js"></script>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -154,7 +155,14 @@ if (isset($_GET['page'])) {
     
 
     </select>
-
+  </br>
+  <form action="" name="addType" method="post">
+    <input type="text" name="addTypeT" style="width: 50px;">
+    <input type="submit" value="新增" name="addT">
+    <?php
+      require('./backend/APIs/addtype/addtype.php');
+    ?>
+  </form>
 
 
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
@@ -182,7 +190,7 @@ if (isset($_GET['page'])) {
 
   <!-- Top menu on small screens -->
   <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
-    <span class="w3-left w3-padding">SOME NAME</span>
+    <span class="w3-left w3-padding">您的書庫</span>
     <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
   </header>
 
@@ -281,8 +289,8 @@ if (isset($_GET['page'])) {
           </form>
         </div>
         <div class="message">
-          <form action="" method="post">
-            <textarea id="messageT" name="messageT" placeholder="留言..."></textarea>
+          <form action="" name="enterMsg" method="post">
+            <textarea id="messageT" name="messageT" onkeydown= "myFunction(event)" placeholder="留言..."></textarea>
             <input type="text" name="messageH" hidden>
             <input type="submit" value="留言" name="message">
             <div id="messageTe">
@@ -419,6 +427,15 @@ if (isset($_GET['page'])) {
   </div>
 
   <script>
+    // Enter 輸入留言
+          function myFunction(event) {
+            var x = event.keyCode;
+            if(x == 13){      //13是enter鍵
+              document.enterMsg.submit();
+            }
+          }
+
+
     // Script to open and close sidebar
     function w3_open() {
       document.getElementById("mySidebar").style.display = "block";
