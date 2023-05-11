@@ -151,9 +151,8 @@ if (isset($_GET['page'])) {
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
 
     <select id="dropdown" onchange="select(this)">
-      <div text=""></div>
+    
 
-      <option name="">請選擇分類</option>
     </select>
 
 
@@ -211,17 +210,21 @@ if (isset($_GET['page'])) {
       </div>
     </div> -->
     <!-- Photo grid -->
-    <div class="w3-row" id="showPic" picid="">
+    <div class="w3-row" id="showPic" >
 
       <?php
       // $query = "select * from bookstore_manber where `id` = ;
       // $result = $link->query($query);
 
+      // $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
+      if(isset($_POST['showPicH'])){
+        $showPicH = $_POST['showPicH'];
+      }
       $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
-      // $query = 'SELECT * FROM images WHERE `UserID` = :sn AND Idmenu=3 limit :sp,6';
       $stmt = $link->prepare($query);
       $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
       $stmt->bindValue(':sn', $ID);
+      // $stmt->bindValue(':sc', $showPicH);
       $stmt->execute();
 
       // 取得多筆資料
@@ -234,7 +237,7 @@ if (isset($_GET['page'])) {
         if ($pic % 3 == 0) {
           echo  '<div class="w3-third">';
         }
-        echo '<img src="' . $row["Image"] . '" style="width:100%" onclick="onClick(this)" pid = " ' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
+        echo '<img src="' . $row["Image"] . '" style="width:100%" onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
         if ($pic % 3 == 0) {
           echo '</div>';
         }
