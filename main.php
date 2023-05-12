@@ -141,7 +141,7 @@ if (isset($_GET['page'])) {
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
   <script src="./js/lib/jquery.js"></script>
   <script src="./js/menu/dropdown.js"></script>
-  <script src="./js/addtype/addtype.js"></script>
+  <script src="./js/type/addtype.js"></script>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -160,7 +160,7 @@ if (isset($_GET['page'])) {
     <input type="text" name="addTypeT" style="width: 50px;">
     <input type="submit" value="新增" name="addT">
     <?php
-      require('./backend/APIs/addtype/addtype.php');
+      require('./backend/APIs/type/addtype.php');
     ?>
   </form>
 
