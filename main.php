@@ -350,6 +350,7 @@ if (isset($_GET['page'])) {
           </form>
         </h4>
         <!-- 放置數據的資料 用資料量進行百分比配置 -->
+        <div hidden>
         <hr class="w3-opacity">
         <h4 class="w3-padding-16">您的數據</h4>
         <p class="w3-wide">公仔</p>
@@ -364,7 +365,7 @@ if (isset($_GET['page'])) {
         <div class="w3-white">
           <div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>
         </div>
-
+        </div>
 
         <!-- 上傳檔案 -->
         <!-- <p> <button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">上傳檔案</button></p> -->
