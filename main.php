@@ -127,15 +127,22 @@ if (isset($_GET['page'])) {
       cursor: pointer
     }
 
-    .w3-modal-content{
+    .w3-modal-content {
       display: flex;
     }
 
-    .message{
+    .message {
       text-align: right;
       padding-left: 20%;
     }
 
+    .w3-third {
+      transition: 0.5s ease-in-out;
+    }
+
+    .w3-third:hover {
+      transform: scale(0.8, 0.8) ;
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="message.css">
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
@@ -152,17 +159,17 @@ if (isset($_GET['page'])) {
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
 
     <select id="dropdown" onchange="select(this)">
-    
+
 
     </select>
-  </br>
-  <form action="" name="addType" method="post">
-    <input type="text" name="addTypeT" style="width: 50px;">
-    <input type="submit" value="新增" name="addT">
-    <?php
+    </br>
+    <form action="" name="addType" method="post">
+      <input type="text" name="addTypeT" style="width: 50px;">
+      <input type="submit" value="新增" name="addT">
+      <?php
       require('./backend/APIs/type/addtype.php');
-    ?>
-  </form>
+      ?>
+    </form>
 
 
     <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
@@ -218,14 +225,14 @@ if (isset($_GET['page'])) {
       </div>
     </div> -->
     <!-- Photo grid -->
-    <div class="w3-row" id="showPic" >
+    <div class="w3-row" id="showPic">
 
       <?php
       // $query = "select * from bookstore_manber where `id` = ;
       // $result = $link->query($query);
 
       // $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
-      if(isset($_POST['showPicH'])){
+      if (isset($_POST['showPicH'])) {
         $showPicH = $_POST['showPicH'];
       }
       $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
@@ -290,7 +297,7 @@ if (isset($_GET['page'])) {
         </div>
         <div class="message">
           <form action="" name="enterMsg" method="post">
-            <textarea id="messageT" name="messageT" onkeydown= "myFunction(event)" placeholder="留言..."></textarea>
+            <textarea id="messageT" name="messageT" onkeydown="myFunction(event)" placeholder="留言..."></textarea>
             <input type="text" name="messageH" hidden>
             <input type="submit" value="留言" name="message">
             <div id="messageTe">
@@ -351,20 +358,20 @@ if (isset($_GET['page'])) {
         </h4>
         <!-- 放置數據的資料 用資料量進行百分比配置 -->
         <div hidden>
-        <hr class="w3-opacity">
-        <h4 class="w3-padding-16">您的數據</h4>
-        <p class="w3-wide">公仔</p>
-        <div class="w3-white">
-          <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
-        </div>
-        <p class="w3-wide">設計</p>
-        <div class="w3-white">
-          <div class="w3-container w3-padding-small w3-center w3-grey" style="width:85%">85%</div>
-        </div>
-        <p class="w3-wide">程式</p>
-        <div class="w3-white">
-          <div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>
-        </div>
+          <hr class="w3-opacity">
+          <h4 class="w3-padding-16">您的數據</h4>
+          <p class="w3-wide">公仔</p>
+          <div class="w3-white">
+            <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
+          </div>
+          <p class="w3-wide">設計</p>
+          <div class="w3-white">
+            <div class="w3-container w3-padding-small w3-center w3-grey" style="width:85%">85%</div>
+          </div>
+          <p class="w3-wide">程式</p>
+          <div class="w3-white">
+            <div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>
+          </div>
         </div>
 
         <!-- 上傳檔案 -->
@@ -429,12 +436,12 @@ if (isset($_GET['page'])) {
 
   <script>
     // Enter 輸入留言
-          function myFunction(event) {
-            var x = event.keyCode;
-            if(x == 13){      //13是enter鍵
-              document.enterMsg.submit();
-            }
-          }
+    function myFunction(event) {
+      var x = event.keyCode;
+      if (x == 13) { //13是enter鍵
+        document.enterMsg.submit();
+      }
+    }
 
 
     // Script to open and close sidebar
