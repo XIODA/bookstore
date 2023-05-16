@@ -11,6 +11,7 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/lib/jquery.js"></script>
     <title>書庫</title>
     <style>
         div {
@@ -33,10 +34,6 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
             width: 100px;
         }
 
-        button {
-            width: 100px;
-            height: 100px;
-        }
 
 
         .account {
@@ -51,26 +48,29 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
             color: black;
             text-decoration: none;
         }
+
+        .lineBtn {
+            margin-left: 47%;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
     <div class="top">
-        <img src="img/<?php echo rand(1, 10); ?>.png">  
-        
-        
+        <img src="img/<?php echo rand(1, 10); ?>.png">
+
+
     </div>
     <div class="main">
         <input type="text" placeholder="請輸入關鍵字">
         <input type="submit" value="搜尋">
-        <div class="button">
-        </div>
         <div>
             <form action="" method="POST">
                 <div class="account">帳號:</div>
-                <input type="text" name="account" placeholder="請輸入帳號" >
+                <input type="text" name="account" placeholder="請輸入帳號">
                 <div class="password">密碼:</div>
-                <input type="password" name="password" >
+                <input type="password" name="password">
                 <br />
                 <input type="submit" name="submit" value="登入">
             </form>
@@ -79,7 +79,9 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
 
         </div>
     </div>
-
+    <span class="lineBtn" id="lineLoginBtn">
+        <img src="./img/btn_login_base.png" style="width: 8%">
+    </span>
     <?php
     $at = "";
     $pd = "";
@@ -116,6 +118,21 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
     }
 
     ?>
+
+    <!--line login 登入 -->
+    <script>
+        $('#lineLoginBtn').on('click', function(e) {
+            let client_id = '1661141696';
+            let redirect_uri = 'https://5954-2401-e180-8861-65c7-3809-1009-443f-37a9.ngrok-free.app/bookstore/main.php';
+            let link = 'https://access.line.me/oauth2/v2.1/authorize?';
+            link += 'response_type=code';
+            link += '&client_id=' + client_id;
+            link += '&redirect_uri=' + redirect_uri;
+            link += '&state=login';
+            link += '&scope=openid%20profile';
+            window.location.href = link;
+        });
+    </script>
 
 </body>
 
