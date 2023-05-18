@@ -123,7 +123,7 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
     <script>
         $('#lineLoginBtn').on('click', function(e) {
             let client_id = '1661141696';
-            let redirect_uri = 'https://5954-2401-e180-8861-65c7-3809-1009-443f-37a9.ngrok-free.app/bookstore/main.php';
+            let redirect_uri = 'https://162b-2401-e180-8861-65c7-a06a-961-cf14-6382.ngrok-free.app/bookstore/backend/APIs/line/login.php';
             let link = 'https://access.line.me/oauth2/v2.1/authorize?';
             link += 'response_type=code';
             link += '&client_id=' + client_id;
