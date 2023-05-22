@@ -26,7 +26,7 @@ function select(){
             for(var i =0 ; i < response.length; i++){
                 // console.log(response[i].Idmenu + response[i].);
                 // showPicH = showPicH + "<img src = '" + response[i].Image + "'" ;
-                showPicH = showPicH +  '<div class="w3-third" >'+"<img src = '" + response[i].Image + "' style='width:100%' onclick='onClick(this)' + pid ='"+response[i].PicNum+"'></div>";
+                showPicH = showPicH + '<div class="w3-third " >'+'<div class="image">'+"<img src = '" + response[i].Image + "' style='width:100%' onclick='onClick(this)' + pid ='"+response[i].PicNum+"'></div>"+'</div>';
             }
           
             document.getElementById("showPic").innerHTML = showPicH;
