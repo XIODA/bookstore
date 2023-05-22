@@ -141,8 +141,14 @@ if (isset($_GET['page'])) {
     }
 
     .w3-third:hover {
-      transform: scale(0.8, 0.8) ;
+      transform: scale(1.2, 1.2);
+      /* transform: scale(0.8, 0.8) ; */
     }
+
+    a {
+      text-decoration :none;
+      color :yellowgreen;
+      }
   </style>
   <link rel="stylesheet" type="text/css" href="message.css">
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
@@ -255,7 +261,7 @@ if (isset($_GET['page'])) {
         echo '<img src="' . $row["Image"] . '" style="width:100%" onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
         if ($pic % 3 == 0) {
           echo '</div>';
-        }
+      }
       }
 
 
@@ -282,7 +288,7 @@ if (isset($_GET['page'])) {
       <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
       <span id="closePic" class="w3-button w3-black w3-xlarge w3-display-topright" onClick='closePicture()'>×</span>
       <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-        <div>
+        <span>
           <img id="img01" class="w3-image">
           <p id="caption"></p>
 
@@ -292,9 +298,13 @@ if (isset($_GET['page'])) {
             <input type="text" name="DeleteP" hidden>
             <input type="text" name="editP" hidden>
             <input type="submit" value="刪除圖片" name="deleteOne">
+
+          </form>
+          <form action="./backend/APIs/menu/edit.php" method="POST">
+            <input type="text" name="editTypeH" eid="" hidden >
             <input type="submit" value="編輯" name="editType">
           </form>
-        </div>
+        </span>
         <div class="message">
           <form action="" name="enterMsg" method="post">
             <textarea id="messageT" name="messageT" onkeydown="myFunction(event)" placeholder="留言..."></textarea>
@@ -323,7 +333,7 @@ if (isset($_GET['page'])) {
     <!-- About section -->
     <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
       <h4><b>關於我</b></h4>
-      <img src="./test/123.jpg" alt="ME" class="w3-image w3-padding-32" width="200" height="250">
+      <a href="./useredit.php"><img src="./test/123.jpg" alt="ME" class="w3-image w3-padding-32" width="200" height="250"></a>
       <div class="w3-content w3-justify" style="max-width:600px">
         <!-- 放置關於自己的資料 -->
         <h4>
@@ -334,26 +344,27 @@ if (isset($_GET['page'])) {
           $stmt = $link->prepare($query);
           $stmt->bindValue(':sn', $ID);
           $stmt->execute();
-
-
+          
+          
           // 取得多筆資料
           $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
           // print_r($reasult);
           // exit;
           foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
           {
+            $charLength = 18;
+            $content = mb_strlen($row["CONTENT"],'UTF-8') <= $charLength ? $row["CONTENT"] : mb_substr($row["CONTENT"], 0,$charLength,'UTF-8') . '<a href="./useredit.php">...查看更多</a>';
             echo $row["NAME"];
             echo "<p>";
-            echo  $row["CONTENT"];
+            echo  $content;
             echo "</p>";
           }
 
           ?>
           <form action="update.php" method="POST">
 
+
             <input type="submit" value="編輯" name="edit">
-
-
           </form>
         </h4>
         <!-- 放置數據的資料 用資料量進行百分比配置 -->
@@ -467,6 +478,8 @@ if (isset($_GET['page'])) {
       var inputH = document.getElementsByName('messageH');
       inputH[0].value = element.getAttribute('pid');
       var inputH = document.getElementsByName('delmessH');
+      inputH[0].value = element.getAttribute('pid');
+      var inputH = document.getElementsByName('editTypeH');
       inputH[0].value = element.getAttribute('pid');
 
 
