@@ -149,6 +149,16 @@ if (isset($_GET['page'])) {
       text-decoration :none;
       color :yellowgreen;
       }
+
+    .image{
+      overflow:hidden;
+      /* border-style: solid; */
+      width: 350px;
+      height: 350px;
+      padding: 10px;
+      margin: 20px;
+      /* text-align: center; */
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="message.css">
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
@@ -258,7 +268,8 @@ if (isset($_GET['page'])) {
         if ($pic % 3 == 0) {
           echo  '<div class="w3-third">';
         }
-        echo '<img src="' . $row["Image"] . '" style="width:100%" onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
+        // echo '<img src="' . $row["Image"] . '" style="width:100% " onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
+        echo '<div class="image">'.'<img src="' . $row["Image"] . '" style="width:100% " onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">'.'</div>';
         if ($pic % 3 == 0) {
           echo '</div>';
       }
