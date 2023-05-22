@@ -12,6 +12,7 @@ function select(){
     //     // "userid": ID
         "showPicH": dropdown_1.options[index].value,
       };
+    //   console.log(dropdown_1.options[index].value);
 
    
     $.ajax({
@@ -51,7 +52,7 @@ function select(){
                 // console.log(response);
                 for(var i = 0 ; i < response.length ; i++){
                     // console.log(response[i].idmenu + response[i].namemenu);
-                    menu = menu + "<option value='" + [i] + "'>" +response[i].namemenu + "</option>";
+                    menu = menu + "<option value='" + response[i].idmenu + "'>" +response[i].namemenu + "</option>";
                     // menu = menu + "<option value='" + response[i].namemenu + "'>" +response[i].namemenu + "</option>";
                 }
                 dropdown.innerHTML = menu;
