@@ -11,11 +11,18 @@ $ID = "";
 if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
     $ID = $_SESSION['ID'];
 }
+
+$startNumber = 1;
+if (isset($_GET['page'])) {
+  $page = $_GET['page'];
+  $startNumber =  0 + ($page - 1) * 6;
+}
 // echo $ID;
 // exit;
 
-$query = 'SELECT * FROM `bookstore`.`images` where `UserID` = :s_userId and `Idmenu` = :s_menuId  ';
+$query = 'SELECT * FROM `bookstore`.`images` where `UserID` = :s_userId and `Idmenu` = :s_menuId  limit :sp,6';
 $stmt = $link->prepare($query);
+$stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
 $stmt->bindValue(':s_menuId',$showPicH);
 $stmt->bindValue(':s_userId',$ID);
 $stmt->execute();
