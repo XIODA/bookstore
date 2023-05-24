@@ -111,7 +111,21 @@ if (isset($_GET['page'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <script>
+    $(".body").html();
+  </script>
   <style>
+    .modeCheckBox:checked+.box {
+      background-color: #000;
+      color: #fff;
+
+    }
+
+    .modeCheckBox:checked+body {
+      background-color: black;
+    }
+
+
     body,
     h1,
     h2,
@@ -146,12 +160,12 @@ if (isset($_GET['page'])) {
     }
 
     a {
-      text-decoration :none;
-      color :yellowgreen;
-      }
+      text-decoration: none;
+      color: yellowgreen;
+    }
 
-    .image{
-      overflow:hidden;
+    .image {
+      overflow: hidden;
       /* border-style: solid; */
       width: 350px;
       height: 350px;
@@ -159,75 +173,90 @@ if (isset($_GET['page'])) {
       margin: 20px;
       /* text-align: center; */
     }
+
+    .color {
+      color: white !important;
+      background-color: black !important;
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="message.css">
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
+  <link rel="stylesheet" type="text/css" href="./css/toggle.css">
   <script src="./js/lib/jquery.js"></script>
   <script src="./js/menu/dropdown.js"></script>
   <script src="./js/type/addtype.js"></script>
+  <script src="./js/type/toggle.js"></script>
+  <script src="./Darkmode/lib/darkmode-js.min.js"></script>
 </head>
 
-<body class="w3-light-grey w3-content" style="max-width:1600px">
+<body class="" style="max-width:1600px">
 
-  <!-- Sidebar/menu -->
-  <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
-    <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
+  <body class="w3-light-grey w3-content" style="max-width:1600px">
 
-    <select id="dropdown" onchange="select(this)">
+    <!-- Sidebar/menu -->
+    <!-- <div class="darkmode-layer darkmode-layer--button" ></div> -->
+    <!-- <button class="darkmode-toggle--white darkmode-toggle" aria-label="Activate dark mode" aria-checked="false" role="checkbox" hidden></button> -->
+    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" onclick="box()">
+      <br>
+        <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
 
-
-    </select>
-    </br>
-    <form action="" name="addType" method="post">
-      <input type="text" name="addTypeT" style="width: 50px;">
-      <input type="submit" value="新增" name="addT">
-      <?php
-      require('./backend/APIs/type/addtype.php');
-      ?>
-    </form>
+        <select id="dropdown" style="width: 100px" onchange="select(this)">
 
 
-    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">關於我</a>
+        </select>
 
-    <!-- <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">分類</a> -->
-
-
-    <a href="./logout.php" onclick="w3_close()" class="w3-bar-item w3-button">登出</a>
-
-    <div class="w3-container w3-padding-32 w3-padding-large" id="contact">
-      <div>
-        <p>找尋您要找尋的書籍</p>
-        <form action="/action_page.php" target="_blank">
-          <div class="w3-section">
-            <input class="w3-input w3-border" type="text" name="Name" required>
-          </div>
-
-          <button type="submit" class="w3-button w3-block w3-black w3-margin-bottom">查詢</button>
+        </br>
+        <form action="" name="addType" method="post">
+          <input type="text" name="addTypeT" style="width: 50px;">
+          <input type="submit" value="新增" name="addT">
+          <?php
+          require('./backend/APIs/type/addtype.php');
+          ?>
         </form>
-      </div>
-    </div>
 
-  </nav>
 
-  <!-- Top menu on small screens -->
-  <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
-    <span class="w3-left w3-padding">您的書庫</span>
-    <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
-  </header>
+        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
+        <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">關於我</a>
 
-  <!-- Overlay effect when opening sidebar on small screens -->
-  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+        <!-- <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">分類</a> -->
 
-  <!-- !PAGE CONTENT! -->
-  <div class="w3-main" style="margin-left:300px">
 
-    <!-- Push down content on small screens -->
-    <div class="w3-hide-large" style="margin-top:83px"></div>
+        <a href="./logout.php" onclick="w3_close()" class="w3-bar-item w3-button">登出</a>
 
-    <!-- 搜尋介面 -->
-    <!-- <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
+        <div class="w3-container w3-padding-32 w3-padding-large" id="contact">
+          <div>
+            <p>找尋您要找尋的書籍</p>
+            <form action="/action_page.php" target="_blank">
+              <div class="w3-section">
+                <input class="w3-input w3-border" type="text" name="Name" required>
+              </div>
+
+              <button type="submit" class="w3-button w3-block w3-black w3-margin-bottom">查詢</button>
+            </form>
+          </div>
+        </div>
+
+    </nav>
+
+
+    <!-- Top menu on small screens -->
+    <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
+      <span class="w3-left w3-padding">您的書庫</span>
+      <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+    </header>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left:300px">
+
+      <!-- Push down content on small screens -->
+      <div class="w3-hide-large" style="margin-top:83px"></div>
+
+      <!-- 搜尋介面 -->
+      <!-- <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
       <div class="w3-content" style="max-width:600px">
         <h4 class="w3-center"><b>搜尋</b></h4>
         <p>找尋您要找尋的書籍</p>
@@ -240,321 +269,336 @@ if (isset($_GET['page'])) {
         </form>
       </div>
     </div> -->
-    <!-- Photo grid -->
-    <div class="w3-row" id="showPic">
+      <!-- Photo grid -->
 
-      <?php
-      // $query = "select * from bookstore_manber where `id` = ;
-      // $result = $link->query($query);
+      <div class="w3-row" id="showPic">
 
-      // $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
-      if (isset($_POST['showPicH'])) {
-        $showPicH = $_POST['showPicH'];
-      }
-      $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
-      $stmt = $link->prepare($query);
-      $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
-      $stmt->bindValue(':sn', $ID);
-      // $stmt->bindValue(':sc', $showPicH);
-      $stmt->execute();
+        <?php
+        // $query = "select * from bookstore_manber where `id` = ;
+        // $result = $link->query($query);
 
-      // 取得多筆資料
-      $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
-      $pic = 0;
-      foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
-      {
-        $Imageb = $row["Image"];
-        $Imagea = explode("/", $Imageb);
-        if ($pic % 3 == 0) {
-          echo  '<div class="w3-third">';
+        // $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
+        if (isset($_POST['showPicH'])) {
+          $showPicH = $_POST['showPicH'];
         }
-        // echo '<img src="' . $row["Image"] . '" style="width:100% " onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
-        echo '<div class="image">'.'<img src="' . $row["Image"] . '" style="width:100% " onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">'.'</div>';
-        if ($pic % 3 == 0) {
-          echo '</div>';
-      }
-      }
+        $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
+        $stmt = $link->prepare($query);
+        $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
+        $stmt->bindValue(':sn', $ID);
+        // $stmt->bindValue(':sc', $showPicH);
+        $stmt->execute();
 
-
-
-
-
-      ?>
-    </div>
-    <!-- Contact section -->
-    <!-- Pagination -->
-    <div class="w3-center w3-padding-32">
-      <div class="w3-bar">
-        <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-        <a href="./main.php?page=1" class="w3-bar-item w3-black w3-button">1</a>
-        <a href="./main.php?page=2" class="w3-bar-item w3-button w3-hover-black">2</a>
-        <a href="./main.php?page=3" class="w3-bar-item w3-button w3-hover-black">3</a>
-        <a href="./main.php?page=4" class="w3-bar-item w3-button w3-hover-black">4</a>
-        <a href="" class="w3-bar-item w3-button w3-hover-black">»</a>
-      </div>
-    </div>
-
-    <!-- Modal for full size images on click-->
-    <div id="modal01" class="w3-modal w3-black" style="padding-top:0">
-      <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
-      <span id="closePic" class="w3-button w3-black w3-xlarge w3-display-topright" onClick='closePicture()'>×</span>
-      <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-        <span>
-          <img id="img01" class="w3-image">
-          <p id="caption"></p>
-
-
-
-          <form action="" method="post">
-            <input type="text" name="DeleteP" hidden>
-            <input type="text" name="editP" hidden>
-            <input type="submit" value="刪除圖片" name="deleteOne">
-
-          </form>
-          <form action="./backend/APIs/menu/edit.php" method="POST">
-            <input type="text" name="editTypeH" eid="" hidden >
-            <input type="submit" value="編輯" name="editType">
-          </form>
-        </span>
-        <div class="message">
-          <form action="" name="enterMsg" method="post">
-            <textarea id="messageT" name="messageT" onkeydown="myFunction(event)" placeholder="留言..."></textarea>
-            <input type="text" name="messageH" hidden>
-            <input type="submit" value="留言" name="message">
-            <div id="messageTe">
-              <?php
-              require('./message.php');
-              ?>
-            </div>
-          </form>
-          <form action="" method="post">
-            <input type="text" name="delmessH" hidden>
-            <input type="submit" value="刪除全部留言" name="delmess">
-            <div>
-              <?php
-              require('./delmessage.php');
-              ?>
-            </div>
-        </div>
-
-        </form>
-      </div>
-    </div>
-
-    <!-- About section -->
-    <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
-      <h4><b>關於我</b></h4>
-      <a href="./useredit.php"><img src="./test/123.jpg" alt="ME" class="w3-image w3-padding-32" width="200" height="250"></a>
-      <div class="w3-content w3-justify" style="max-width:600px">
-        <!-- 放置關於自己的資料 -->
-        <h4>
-          <?php
-          // $query = "select * from bookstore_manber where `id` = ;
-          // $result = $link->query($query);
-          $query = 'SELECT * FROM bookstore_manber WHERE `ID` = :sn';
-          $stmt = $link->prepare($query);
-          $stmt->bindValue(':sn', $ID);
-          $stmt->execute();
-          
-          
-          // 取得多筆資料
-          $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
-          // print_r($reasult);
-          // exit;
-          foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
-          {
-            $charLength = 18;
-            $content = mb_strlen($row["CONTENT"],'UTF-8') <= $charLength ? $row["CONTENT"] : mb_substr($row["CONTENT"], 0,$charLength,'UTF-8') . '<a href="./useredit.php">...查看更多</a>';
-            echo $row["NAME"];
-            echo "<p>";
-            echo  $content;
-            echo "</p>";
+        // 取得多筆資料
+        $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
+        $pic = 0;
+        foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
+        {
+          $Imageb = $row["Image"];
+          $Imagea = explode("/", $Imageb);
+          if ($pic % 3 == 0) {
+            echo  '<div class="w3-third">';
           }
+          // echo '<img src="' . $row["Image"] . '" style="width:100% " onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">';
+          echo '<div class="image">' . '<img src="' . $row["Image"] . '" style="width:100% " onclick="onClick(this)" pid = "' . $row["PicNum"] . '" alt="' . $Imagea[1] . '">' . '</div>';
+          if ($pic % 3 == 0) {
+            echo '</div>';
+          }
+        }
 
-          ?>
-          <form action="update.php" method="POST">
 
 
-            <input type="submit" value="編輯" name="edit">
-          </form>
-        </h4>
-        <!-- 放置數據的資料 用資料量進行百分比配置 -->
-        <div hidden>
-          <hr class="w3-opacity">
-          <h4 class="w3-padding-16">您的數據</h4>
-          <p class="w3-wide">公仔</p>
-          <div class="w3-white">
-            <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
-          </div>
-          <p class="w3-wide">設計</p>
-          <div class="w3-white">
-            <div class="w3-container w3-padding-small w3-center w3-grey" style="width:85%">85%</div>
-          </div>
-          <p class="w3-wide">程式</p>
-          <div class="w3-white">
-            <div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>
-          </div>
-        </div>
 
-        <!-- 上傳檔案 -->
-        <!-- <p> <button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">上傳檔案</button></p> -->
-        <p>
-        <form action="" method="post" enctype="multipart/form-data">
-          <input type="file" name="image">
-          <input type="submit" value="upload" name="upload" class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">
-          <br />
-          <input type="submit" name="deleteAll" value="一鍵刪除">
-        </form>
-        </p>
 
-        <p>
-
-        </p>
+        ?>
       </div>
-    </div>
-
-
-
-    <!-- Footer -->
-    <footer class="w3-container w3-padding-32 w3-grey">
-      <div class="w3-row-padding">
-        <div class="w3-third">
-          <h3>INFO</h3>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+      <!-- Contact section -->
+      <!-- Pagination -->
+      <div class="w3-center w3-padding-32">
+        <div class="w3-bar">
+          <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
+          <a href="javascript:void(0);" id="pg1" class="w3-bar-item w3-black w3-button" onclick="page1()">1</a>
+          <a href="javascript:void(0);" id="pg2" class="w3-bar-item w3-button w3-hover-black" onclick="page2()">2</a>
+          <a href="javascript:void(0);" id="pg3" class="w3-bar-item w3-button w3-hover-black" onclick="page3()">3</a>
+          <a href="javascript:void(0);" id="pg4" class="w3-bar-item w3-button w3-hover-black" onclick="page4()">4</a>
+          <a href="" class="w3-bar-item w3-button w3-hover-black">»</a>
         </div>
+      </div>
 
-        <div class="w3-third">
-          <h3>BLOG POSTS</h3>
-          <ul class="w3-ul">
-            <li class="w3-padding-16 w3-hover-black">
-              <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
-              <span class="w3-large">Lorem</span><br>
-              <span>Sed mattis nunc</span>
-            </li>
-            <li class="w3-padding-16 w3-hover-black">
-              <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
-              <span class="w3-large">Ipsum</span><br>
-              <span>Praes tinci sed</span>
-            </li>
-          </ul>
+      <!-- Modal for full size images on click-->
+      <div id="modal01" class="w3-modal w3-black" style="padding-top:0">
+        <!-- <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'"> -->
+        <span id="closePic" class="w3-button w3-black w3-xlarge w3-display-topright" onClick='closePicture()'>×</span>
+        <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+          <span>
+            <img id="img01" class="w3-image">
+            <p id="caption"></p>
+
+
+
+            <form action="" method="post">
+              <input type="text" name="DeleteP" hidden>
+              <input type="text" name="editP" hidden>
+              <input type="submit" value="刪除圖片" name="deleteOne">
+
+            </form>
+            <form action="./backend/APIs/menu/edit.php" method="POST">
+              <input type="text" name="editTypeH" eid="" hidden>
+              <input type="submit" value="編輯" name="editType">
+            </form>
+          </span>
+          <div class="message">
+            <form action="" name="enterMsg" method="post">
+              <textarea id="messageT" name="messageT" onkeydown="myFunction(event)" placeholder="留言..."></textarea>
+              <input type="text" name="messageH" hidden>
+              <input type="submit" value="留言" name="message">
+              <div id="messageTe">
+                <?php
+                require('./message.php');
+                ?>
+              </div>
+            </form>
+            <form action="" method="post">
+              <input type="text" name="delmessH" hidden>
+              <input type="submit" value="刪除全部留言" name="delmess">
+              <div>
+                <?php
+                require('./delmessage.php');
+                ?>
+              </div>
+          </div>
+
+          </form>
         </div>
+      </div>
 
-        <div class="w3-third">
-          <h3>POPULAR TAGS</h3>
+      <!-- About section -->
+      <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
+        <h4><b>關於我</b></h4>
+        <a href="./useredit.php"><img src="./img/123.jpg" alt="ME" class="w3-image w3-padding-32" width="200" height="250"></a>
+        <div class="w3-content w3-justify" style="max-width:600px">
+          <!-- 放置關於自己的資料 -->
+          <h4>
+            <?php
+            // $query = "select * from bookstore_manber where `id` = ;
+            // $result = $link->query($query);
+            $query = 'SELECT * FROM bookstore_manber WHERE `ID` = :sn';
+            $stmt = $link->prepare($query);
+            $stmt->bindValue(':sn', $ID);
+            $stmt->execute();
+
+
+            // 取得多筆資料
+            $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
+            // print_r($reasult);
+            // exit;
+            foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
+            {
+              $charLength = 18;
+              $content = mb_strlen($row["CONTENT"], 'UTF-8') <= $charLength ? $row["CONTENT"] : mb_substr($row["CONTENT"], 0, $charLength, 'UTF-8') . '<a href="./useredit.php">...查看更多</a>';
+              echo $row["NAME"];
+              echo "<p>";
+              echo  $content;
+              echo "</p>";
+            }
+
+            ?>
+            <form action="update.php" method="POST">
+
+
+              <input type="submit" value="編輯" name="edit">
+            </form>
+          </h4>
+          <!-- 放置數據的資料 用資料量進行百分比配置 -->
+          <div hidden>
+            <hr class="w3-opacity">
+            <h4 class="w3-padding-16">您的數據</h4>
+            <p class="w3-wide">公仔</p>
+            <div class="w3-white">
+              <div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>
+            </div>
+            <p class="w3-wide">設計</p>
+            <div class="w3-white">
+              <div class="w3-container w3-padding-small w3-center w3-grey" style="width:85%">85%</div>
+            </div>
+            <p class="w3-wide">程式</p>
+            <div class="w3-white">
+              <div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>
+            </div>
+          </div>
+
+          <!-- 上傳檔案 -->
+          <!-- <p> <button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">上傳檔案</button></p> -->
           <p>
-            <span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">London</span>
-            <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">IKEA</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">NORWAY</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">DIY</span>
-            <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Baby</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Family</span>
-            <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">News</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Clothing</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Shopping</span>
-            <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Sports</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Games</span>
+          <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <input type="submit" value="upload" name="upload" class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">
+            <br />
+            <input type="submit" name="deleteAll" value="一鍵刪除">
+          </form>
+          </p>
+
+          <p>
+
           </p>
         </div>
       </div>
-    </footer>
 
 
-    <!-- End page content -->
-  </div>
 
-  <script>
-    // Enter 輸入留言
-    function myFunction(event) {
-      var x = event.keyCode;
-      if (x == 13) { //13是enter鍵
-        document.enterMsg.submit();
+      <!-- Footer -->
+      <footer class="w3-container w3-padding-32 w3-grey">
+        <div class="w3-row-padding">
+          <div class="w3-third">
+            <h3>INFO</h3>
+            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+          </div>
+
+          <div class="w3-third">
+            <h3>BLOG POSTS</h3>
+            <ul class="w3-ul">
+              <li class="w3-padding-16 w3-hover-black">
+                <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+                <span class="w3-large">Lorem</span><br>
+                <span>Sed mattis nunc</span>
+              </li>
+              <li class="w3-padding-16 w3-hover-black">
+                <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
+                <span class="w3-large">Ipsum</span><br>
+                <span>Praes tinci sed</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="w3-third">
+            <h3>POPULAR TAGS</h3>
+            <p>
+              <span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">London</span>
+              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">IKEA</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">NORWAY</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">DIY</span>
+              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Baby</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Family</span>
+              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">News</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Clothing</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Shopping</span>
+              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Sports</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Games</span>
+            </p>
+          </div>
+        </div>
+      </footer>
+
+
+      <!-- End page content -->
+    </div>
+    </div>
+    <script>
+      //深色模式
+      new Darkmode().showWidget();
+
+
+
+
+      // Enter 輸入留言
+      function myFunction(event) {
+        var x = event.keyCode;
+        if (x == 13) { //13是enter鍵
+          document.enterMsg.submit();
+        }
       }
-    }
 
 
-    // Script to open and close sidebar
-    function w3_open() {
-      document.getElementById("mySidebar").style.display = "block";
-      document.getElementById("myOverlay").style.display = "block";
-    }
+      // Script to open and close sidebar
+      function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("myOverlay").style.display = "block";
+      }
 
-    function w3_close() {
-      document.getElementById("mySidebar").style.display = "none";
-      document.getElementById("myOverlay").style.display = "none";
-    }
+      function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("myOverlay").style.display = "none";
+      }
 
-    // Modal Image Gallery
-    function onClick(element) {
-      document.getElementById("img01").src = element.src;
-      document.getElementById("modal01").style.display = "block";
-      var captionText = document.getElementById("caption");
-      captionText.innerHTML = element.alt;
-      // console.log(element);
-      var inputDel = document.getElementsByName("DeleteP");
-      inputDel[0].value = element.getAttribute('pid');
-      var inputH = document.getElementsByName('messageH');
-      inputH[0].value = element.getAttribute('pid');
-      var inputH = document.getElementsByName('delmessH');
-      inputH[0].value = element.getAttribute('pid');
-      var inputH = document.getElementsByName('editTypeH');
-      inputH[0].value = element.getAttribute('pid');
+      //頁碼顏色切換
 
 
-      // 修改留言區內容
-      var datas = {
-        // "userid": ID
-        "PicNum": inputDel[0].value,
-      };
-      $.ajax({
-        type: "POST",
-        url: "./backend/APIs/message/messageShow.php",
-        dataType: "json", //用字串顯示
-        data: datas,
-        success: function(response) {
-          // console.log(response);
-          // var messageTe = document.getElementById('messageTe');
-          // messageTe.innerHTML
-          var bb = "";
 
 
-          for (var i = 0; i < response.length; i++) {
 
-            bb = bb + (response[i].CONTENT) + "///" + (response[i].DATE) + " " + "<button type='button' mid='" + (response[i].ID) + "' onclick = 'delOneMsg(this)'>" + "-刪除" + "</button>" + "<br/>";
+
+
+      // Modal Image Gallery
+      function onClick(element) {
+        document.getElementById("img01").src = element.src;
+        document.getElementById("modal01").style.display = "block";
+        var captionText = document.getElementById("caption");
+        captionText.innerHTML = element.alt;
+        // console.log(element);
+        var inputDel = document.getElementsByName("DeleteP");
+        inputDel[0].value = element.getAttribute('pid');
+        var inputH = document.getElementsByName('messageH');
+        inputH[0].value = element.getAttribute('pid');
+        var inputH = document.getElementsByName('delmessH');
+        inputH[0].value = element.getAttribute('pid');
+        var inputH = document.getElementsByName('editTypeH');
+        inputH[0].value = element.getAttribute('pid');
+
+
+        // 修改留言區內容
+        var datas = {
+          // "userid": ID
+          "PicNum": inputDel[0].value,
+        };
+        $.ajax({
+          type: "POST",
+          url: "./backend/APIs/message/messageShow.php",
+          dataType: "json", //用字串顯示
+          data: datas,
+          success: function(response) {
+            // console.log(response);
+            // var messageTe = document.getElementById('messageTe');
+            // messageTe.innerHTML
+            var bb = "";
+
+
+            for (var i = 0; i < response.length; i++) {
+
+              bb = bb + (response[i].CONTENT) + "///" + (response[i].DATE) + " " + "<button type='button' mid='" + (response[i].ID) + "' onclick = 'delOneMsg(this)'>" + "-刪除" + "</button>" + "<br/>";
+            }
+            messageTe.innerHTML = bb
+          },
+          error: function(thrownError) {
+            console.log(thrownError);
           }
-          messageTe.innerHTML = bb
-        },
-        error: function(thrownError) {
-          console.log(thrownError);
-        }
-      });
-    }
-
-    function closePicture() {
-      var closePictureArea = document.getElementById("modal01");
-      closePictureArea.style.display = 'none';
-    }
-
-    //刪除單個留言
-
-
-
-    function delOneMsg(emt) {
-      var closePicMsg = document.getElementById("modal01");
-      closePicMsg.style.display = 'none';
-      // var inputMsgD = document.getElementsByName('delOneMsg');
-      // inputMsgD[0].value =getAttribute('mid');
-
-      // console.log(emt.getAttribute('mid'));
-      var delOMsg = {
-        "delOneMsg": emt.getAttribute('mid')
+        });
       }
-      $.ajax({
-        type: 'POST',
-        url: './backend/APIs/message/delOneMsg.php',
-        data: delOMsg,
-        dataType: 'JSON',
-        success: function(response) {
 
+      function closePicture() {
+        var closePictureArea = document.getElementById("modal01");
+        closePictureArea.style.display = 'none';
+      }
+
+      //刪除單個留言
+
+
+
+      function delOneMsg(emt) {
+        var closePicMsg = document.getElementById("modal01");
+        closePicMsg.style.display = 'none';
+        // var inputMsgD = document.getElementsByName('delOneMsg');
+        // inputMsgD[0].value =getAttribute('mid');
+
+        // console.log(emt.getAttribute('mid'));
+        var delOMsg = {
+          "delOneMsg": emt.getAttribute('mid')
         }
-      })
-    }
-  </script>
+        $.ajax({
+          type: 'POST',
+          url: './backend/APIs/message/delOneMsg.php',
+          data: delOMsg,
+          dataType: 'JSON',
+          success: function(response) {
+
+          }
+        })
+      }
+    </script>
 
 
-</body>
+  </body>
 
 </html>
