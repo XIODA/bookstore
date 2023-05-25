@@ -111,9 +111,6 @@ if (isset($_GET['page'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-  <script>
-    $(".body").html();
-  </script>
   <style>
     .modeCheckBox:checked+.box {
       background-color: #000;
@@ -182,6 +179,7 @@ if (isset($_GET['page'])) {
   <link rel="stylesheet" type="text/css" href="message.css">
   <link rel="stylesheet" type="text/css" href="./css/menu.css">
   <link rel="stylesheet" type="text/css" href="./css/toggle.css">
+  <link rel="stylesheet" type="text/css" href="./css/bganimation.css">
   <script src="./js/lib/jquery.js"></script>
   <script src="./js/menu/dropdown.js"></script>
   <script src="./js/type/addtype.js"></script>
@@ -197,45 +195,46 @@ if (isset($_GET['page'])) {
     <!-- <div class="darkmode-layer darkmode-layer--button" ></div> -->
     <!-- <button class="darkmode-toggle--white darkmode-toggle" aria-label="Activate dark mode" aria-checked="false" role="checkbox" hidden></button> -->
     <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" onclick="box()">
+    <!-- <nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-text-white w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" > -->
       <br>
-        <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
-        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
+      <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
+      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
 
-        <select id="dropdown" style="width: 100px" onchange="select(this)">
-
-
-        </select>
-
-        </br>
-        <form action="" name="addType" method="post">
-          <input type="text" name="addTypeT" style="width: 50px;">
-          <input type="submit" value="新增" name="addT">
-          <?php
-          require('./backend/APIs/type/addtype.php');
-          ?>
-        </form>
+      <select id="dropdown" style="width: 100px" onchange="select(this)">
 
 
-        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
-        <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">關於我</a>
+      </select>
 
-        <!-- <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">分類</a> -->
+      </br>
+      <form action="" name="addType" method="post">
+        <input type="text" name="addTypeT" style="width: 50px;">
+        <input type="submit" value="新增" name="addT">
+        <?php
+        require('./backend/APIs/type/addtype.php');
+        ?>
+      </form>
 
 
-        <a href="./logout.php" onclick="w3_close()" class="w3-bar-item w3-button">登出</a>
+      <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
+      <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">關於我</a>
 
-        <div class="w3-container w3-padding-32 w3-padding-large" id="contact">
-          <div>
-            <p>找尋您要找尋的書籍</p>
-            <form action="/action_page.php" target="_blank">
-              <div class="w3-section">
-                <input class="w3-input w3-border" type="text" name="Name" required>
-              </div>
+      <!-- <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">分類</a> -->
 
-              <button type="submit" class="w3-button w3-block w3-black w3-margin-bottom">查詢</button>
-            </form>
-          </div>
+
+      <a href="./logout.php" onclick="w3_close()" class="w3-bar-item w3-button">登出</a>
+
+      <div class="w3-container w3-padding-32 w3-padding-large" id="contact">
+        <div>
+          <p>找尋您要找尋的書籍</p>
+          <form action="/action_page.php" target="_blank">
+            <div class="w3-section">
+              <input class="w3-input w3-border" type="text" name="Name" required>
+            </div>
+
+            <button type="submit" class="w3-button w3-block w3-black w3-margin-bottom">查詢</button>
+          </form>
         </div>
+      </div>
 
     </nav>
 
@@ -252,6 +251,20 @@ if (isset($_GET['page'])) {
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
 
+
+    <!-- BG Animate -->
+      <div class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </div>
       <!-- Push down content on small screens -->
       <div class="w3-hide-large" style="margin-top:83px"></div>
 
@@ -445,6 +458,9 @@ if (isset($_GET['page'])) {
 
 
 
+
+
+
       <!-- Footer -->
       <footer class="w3-container w3-padding-32 w3-grey">
         <div class="w3-row-padding">
@@ -481,6 +497,8 @@ if (isset($_GET['page'])) {
           </div>
         </div>
       </footer>
+
+
 
 
       <!-- End page content -->
