@@ -5,7 +5,7 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
 session_start(); //存取開始
 if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
   $ID = $_SESSION['ID'];
-} else {
+} else { 
   header("Location: ./errorPage/404.php"); //否則跳出404
 }
 ?>
