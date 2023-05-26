@@ -1,6 +1,6 @@
 
 
-
+// 點選類別秀出圖片
 
 function select(){
     var dropdown_1 =document.getElementById("dropdown");
@@ -26,20 +26,29 @@ function select(){
             for(var i =0 ; i < response.length; i++){
                 // console.log(response[i].Idmenu + response[i].);
                 // showPicH = showPicH + "<img src = '" + response[i].Image + "'" ;
+                
                 showPicH = showPicH + '<div class="w3-third " >'+'<div class="image">'+"<img src = '" + response[i].Image + "' style='width:100%' onclick='onClick(this)' + pid ='"+response[i].PicNum+"'></div>"+'</div>';
+                // showPicH = showPicH + '<div class="w3-third " >'+'<div class="image">'+"<img src = '" + response[i].Image + "' style='width:100%' onclick='onClick(this)' + pid ='"+response[i].PicNum+"'></div>"+'</div>';
+
+            
             }
+            
           
             document.getElementById("showPic").innerHTML = showPicH;
             
         }
     })
 }
+
+
+
+
+//點選類別跳轉
+
     window.onload = function(){
 
 
-        function select(){
-
-        }
+        
 
         $.ajax({
             type: 'POST',
