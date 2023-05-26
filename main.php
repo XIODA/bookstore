@@ -8,6 +8,22 @@ if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
 } else {
   header("Location: ./errorPage/404.php"); //否則跳出404
 }
+
+//頁數計算
+$pagequery = 'SELECT count(*) as page_1 FROM bookstore.images where `UserID` = :usid';
+$stmt = $link->prepare($pagequery);
+$stmt->bindValue(':usid', $ID);
+$stmt->execute();
+$reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+$picnumber = $reasult[0]['page_1'];
+// echo $pgnumber;
+$pgnumber = $picnumber/6;
+// echo ceil($pgnumber);
+
+
+
+
 ?>
 
 <!--  -->
@@ -184,6 +200,7 @@ if (isset($_GET['page'])) {
   <script src="./js/menu/dropdown.js"></script>
   <script src="./js/type/addtype.js"></script>
   <script src="./js/type/toggle.js"></script>
+  <script src="./js/page.js"></script>
   <script src="./js/jquery-ui/jquery-ui.js"></script>
   <script src="./Darkmode/lib/darkmode-js.min.js"></script>
 </head>
@@ -195,7 +212,7 @@ if (isset($_GET['page'])) {
     <!-- Sidebar/menu -->
     <!-- <div class="darkmode-layer darkmode-layer--button" ></div> -->
     <!-- <button class="darkmode-toggle--white darkmode-toggle" aria-label="Activate dark mode" aria-checked="false" role="checkbox" hidden></button> -->
-    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" >
+    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar">
       <!-- <nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-text-white w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" > -->
       <br>
       <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
@@ -327,16 +344,18 @@ if (isset($_GET['page'])) {
       </div>
       <!-- Contact section -->
       <!-- Pagination -->
-      <div class="w3-center w3-padding-32">
-        <div class="w3-bar">
-          <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-          <a href="javascript:void(0);" id="pg1" class="w3-bar-item w3-black w3-button" onclick="page1()">1</a>
-          <a href="javascript:void(0);" id="pg2" class="w3-bar-item w3-button w3-hover-black" onclick="page2()">2</a>
-          <a href="javascript:void(0);" id="pg3" class="w3-bar-item w3-button w3-hover-black" onclick="page3()">3</a>
-          <a href="javascript:void(0);" id="pg4" class="w3-bar-item w3-button w3-hover-black" onclick="page4()">4</a>
-          <a href="" class="w3-bar-item w3-button w3-hover-black">»</a>
+      <form action="" method="post">
+        <div class="w3-center w3-padding-32">
+          <div class="w3-bar">
+            <input type="text" name="pg" value="" hidden>
+            <?php
+            for($i = 1; $i<ceil($pgnumber); $i++){
+            echo '<div name="pg1" class="w3-bar-item w3-black w3-button" onclick="page1()">'.$i.'</div>';
+            }
+            ?>
+          </div>
         </div>
-      </div>
+      </form>
 
       <!-- Modal for full size images on click-->
       <div id="modal01" class="w3-modal w3-black" style="padding-top:0">
@@ -489,7 +508,7 @@ if (isset($_GET['page'])) {
           <div class="w3-third">
             <h3>CALENDAR</h3>
             <p>
-            <input type="text" id="datepicker"  >
+              <input type="text" id="datepicker">
             </p>
           </div>
         </div>
@@ -615,9 +634,9 @@ if (isset($_GET['page'])) {
 
 
       //日期
-        $(function() {
-          $("#datepicker").datepicker();
-        });
+      $(function() {
+        $("#datepicker").datepicker();
+      });
     </script>
 
 
