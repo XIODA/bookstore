@@ -90,7 +90,7 @@ if (isset($_POST["deleteOne"])) {
 
 <!-- 頁數分頁  -->
 <?php
-$startNumber = 1;
+$startNumber = 0;
 if (isset($_GET['page'])) {
   $page = $_GET['page'];
   $startNumber =  0 + ($page - 1) * 6;
@@ -184,6 +184,7 @@ if (isset($_GET['page'])) {
   <script src="./js/menu/dropdown.js"></script>
   <script src="./js/type/addtype.js"></script>
   <script src="./js/type/toggle.js"></script>
+  <script src="./js/jquery-ui/jquery-ui.js"></script>
   <script src="./Darkmode/lib/darkmode-js.min.js"></script>
 </head>
 
@@ -194,8 +195,8 @@ if (isset($_GET['page'])) {
     <!-- Sidebar/menu -->
     <!-- <div class="darkmode-layer darkmode-layer--button" ></div> -->
     <!-- <button class="darkmode-toggle--white darkmode-toggle" aria-label="Activate dark mode" aria-checked="false" role="checkbox" hidden></button> -->
-    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" onclick="box()">
-    <!-- <nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-text-white w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" > -->
+    <nav class="w3-sidebar w3-bar-block w3-white w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" >
+      <!-- <nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-text-white w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar" > -->
       <br>
       <h3 class="w3-padding-64 w3-center"><b>歡迎回到<br>您的書庫</b></h3>
       <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
@@ -252,7 +253,7 @@ if (isset($_GET['page'])) {
     <div class="w3-main" style="margin-left:300px">
 
 
-    <!-- BG Animate -->
+      <!-- BG Animate -->
       <div class="circles">
         <li></li>
         <li></li>
@@ -486,13 +487,9 @@ if (isset($_GET['page'])) {
           </div>
 
           <div class="w3-third">
-            <h3>POPULAR TAGS</h3>
+            <h3>CALENDAR</h3>
             <p>
-              <span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">London</span>
-              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">IKEA</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">NORWAY</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">DIY</span>
-              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Baby</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Family</span>
-              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">News</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Clothing</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Shopping</span>
-              <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Sports</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Games</span>
+            <input type="text" id="datepicker"  >
             </p>
           </div>
         </div>
@@ -614,6 +611,13 @@ if (isset($_GET['page'])) {
           }
         })
       }
+
+
+
+      //日期
+        $(function() {
+          $("#datepicker").datepicker();
+        });
     </script>
 
 

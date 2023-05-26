@@ -12,7 +12,7 @@ if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
   $ID = $_SESSION['ID'];
 }
 
-$startNumber = 1;
+$startNumber = 0;
 if (isset($_GET['page'])) {
   $page = $_GET['page'];
   $startNumber =  0 + ($page - 1) * 6;
