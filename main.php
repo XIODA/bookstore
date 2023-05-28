@@ -24,9 +24,38 @@ $pgnumber = $picnumber/6;
 
 
 
+
+
 ?>
 
-<!--  -->
+<!-- 類別頁數計算 -->
+
+<?php
+$showPicH = "";
+if(isset($_GET['menuid'])){
+  $showPicH = $_GET['menuid'];
+}
+
+$ID = "";
+if (isset($_SESSION['ID'])) { //如果儲存到ID 便取得存取ID的變數
+  $ID = $_SESSION['ID'];
+}
+
+
+  $query = 'SELECT count(*) as page_type FROM `bookstore`.`images` where `UserID` = :s_userId and `Idmenu` = :s_menuId ';
+  $stmt = $link->prepare($query);
+  $stmt->bindValue(':s_menuId', $showPicH);
+  $stmt->bindValue(':s_userId', $ID);
+  $stmt->execute();
+
+  $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
+  // print_r($reasult) ;
+  // print_r($reasult[0]['page_type']);
+  $pagetype = $reasult[0]['page_type'];
+  $pagetype_1 = $pagetype/6;
+  // echo $pagetype_1;
+  // exit;
+?>
 
 <!-- 新增圖片 -->
 <?php
@@ -111,6 +140,8 @@ if (isset($_GET['page'])) {
   $page = $_GET['page'];
   $startNumber =  0 + ($page - 1) * 6;
 }
+
+
 ?>
 
 
@@ -305,6 +336,12 @@ if (isset($_GET['page'])) {
       <div class="w3-row" id="showPic">
 
         <?php
+        $menuid = "";
+        
+        if(isset($_GET['menuid'])){
+          $menuid = $_GET['menuid'];
+        }
+        
         // $query = "select * from bookstore_manber where `id` = ;
         // $result = $link->query($query);
 
@@ -312,15 +349,26 @@ if (isset($_GET['page'])) {
         if (isset($_POST['showPicH'])) {
           $showPicH = $_POST['showPicH'];
         }
-        $query = 'SELECT * FROM images WHERE `UserID` = :sn limit :sp,6';
-        $stmt = $link->prepare($query);
-        $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
-        $stmt->bindValue(':sn', $ID);
-        // $stmt->bindValue(':sc', $showPicH);
-        $stmt->execute();
+        if($menuid == "" || $menuid == 0){
+          $query = 'SELECT * FROM images where `UserID` = :sn limit :sp,6';
+          $stmt = $link->prepare($query);
+          $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
+          $stmt->bindValue(':sn', $ID);
+          $stmt->execute();
+          $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
+        }else{
+          $query = 'SELECT * FROM images WHERE `UserID` = :sn and `idmenu` = :idm limit :sp,6';
+          $stmt = $link->prepare($query);
+          $stmt->bindValue(':sp', $startNumber, PDO::PARAM_INT); //PDO::PARAM_INT = 數字格式
+          $stmt->bindValue(':sn', $ID);
+          $stmt->bindValue(':idm', $menuid);
+          // $stmt->bindValue(':sc', $showPicH);
+          $stmt->execute();
+          $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        }
 
         // 取得多筆資料
-        $reasult = $stmt->fetchall(PDO::FETCH_ASSOC);
         $pic = 0;
         foreach ($reasult as $row)            //  同 while ($row = $result->fetch())
         {
@@ -349,10 +397,24 @@ if (isset($_GET['page'])) {
           <div class="w3-bar">
             <input type="text" name="pg" value="" hidden>
             <?php
-            for($i = 1; $i<ceil($pgnumber); $i++){
-            echo '<div name="pg1" class="w3-bar-item w3-black w3-button" onclick="page1()">'.$i.'</div>';
+            if($menuid == "" || $menuid == 0){
+              for($i = 1; $i<=ceil($pgnumber); $i++){
+              echo '<a href="./main.php?page='.$i.'"><div name="pg1" class="w3-bar-item w3-black w3-button" >'.$i.'</div></a>';
+              }
+
+            }else{
+              for($j = 1; $j<=ceil($pagetype_1); $j++){
+              echo '<a href="./main.php?menuid='.$menuid.'&page='.$j.'"><div name="pg1" class="w3-bar-item w3-black w3-button" >'.$j.'</div></a>';
+              }
+
             }
+            
+            
+          
+          
             ?>
+
+            
           </div>
         </div>
       </form>
