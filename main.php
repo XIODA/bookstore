@@ -152,22 +152,15 @@ if (isset($_GET['page'])) {
 <html lang="en">
 
 <head>
-  <title>書庫
-  </title>
+  <link rel="Website Icon" type="png" href="./img/5.png">
+  <title>書庫</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <style>
-    .modeCheckBox:checked+.box {
-      background-color: #000;
-      color: #fff;
-
-    }
-
-    .modeCheckBox:checked+body {
-      background-color: black;
-    }
+ 
+ 
 
 
     body,
@@ -266,7 +259,7 @@ if (isset($_GET['page'])) {
 
       <a href="#" onclick="w3_close()" class="w3-bar-item w3-button">LIBRARY</a>
       <form action="" method="post">
-        <input type="text" value="" name="userSystem">
+        <input type="text" value="" name="userSystem" hidden>
       </form>
       <?php
       $userStm = "";
@@ -289,7 +282,7 @@ if (isset($_GET['page'])) {
 
       if ($reasult[0]['UserSystem'] == 1) {
         
-        echo '<a href="./user_system.php" onclick="w3_close()" class="w3-bar-item w3-button">管理者系統</a>';
+        echo '<a href="././user_system.php" onclick="w3_close()" class="w3-bar-item w3-button">管理者系統</a>';
       }
       if ($reasult[0]['UserSystem']== 0 || $reasult[0]['UserSystem']== "") {
       }
@@ -512,7 +505,7 @@ if (isset($_GET['page'])) {
       <!-- About section -->
       <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
         <h4><b>關於我</b></h4>
-        <a href="./useredit.php"><img src="./img/123.jpg" alt="ME" class="w3-image w3-padding-32" width="200" height="250"></a>
+        <img src="./img/123.jpg" alt="ME" class="w3-image w3-padding-32" width="200" height="250">
         <div class="w3-content w3-justify" style="max-width:600px">
           <!-- 放置關於自己的資料 -->
           <h4>
