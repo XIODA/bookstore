@@ -35,6 +35,9 @@ $link = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';charset=u
 						<form action="" method="POST">
 							<form action="#" class="signin-form">
 								<div class="form-group">
+									<?php echo '<a href="./login.php">' . '←' . '</a>' ?>
+								</div>
+								<div class="form-group">
 									<input type="text" name="account" class="form-control" placeholder="Account" required>
 								</div>
 								<div class="form-group">
